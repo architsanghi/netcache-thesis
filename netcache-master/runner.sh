@@ -5,10 +5,17 @@
 
 
 
-p4dir=/home/p4/Desktop/Netcache-Chi-Sq/netcache-master/src/p4
-cpdir=/home/p4/Desktop/Netcache-Chi-Sq/netcache-master/src/control_plane
-kvdir=/home/p4/Desktop/Netcache-Chi-Sq/netcache-master/src/kv_store
-memdir=/home/p4/Desktop/Netcache-Chi-Sq/netcache-master/src/kv_store/data
+# p4dir=/home/p4/Desktop/netcache-thesis/netcache-master/src/p4
+# cpdir=/home/p4/Desktop/netcache-thesis/netcache-master/src/control_plane
+# kvdir=/home/p4/Desktop/netcache-thesis/netcache-master/src/kv_store
+# memdir=/home/p4/Desktop/netcache-thesis/netcache-master/src/kv_store/data
+
+p4dir="$(pwd)/src/p4"
+cpdir="$(pwd)/src/control_plane"
+kvdir="$(pwd)/src/kv_store"
+memdir="$(pwd)/src/kv_store/data"
+
+
 PID= echo "$$"
 
 

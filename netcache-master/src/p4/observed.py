@@ -6,7 +6,12 @@ import matplotlib.pyplot as plt
 import math
 import scipy.stats
 
+## min packet threshold is used because we might some observed new equivalence classes
+## so we have to consider a small threshold of packets from this equivalence class which
+## would still remain the expected behavior as 5 packets are still not far from 0
 min_packet_threshold= 5 
+
+## chi square separator is used to measure the start and end window of attack.
 chi_square_separator= 5
 
 parser = argparse.ArgumentParser()
@@ -16,42 +21,51 @@ parser.add_argument('--duration', nargs='?', type=int, default=40, help='Duratio
 args = parser.parse_args()
 duration= args.duration
 
+# used for reference
 start_time= time.time()
+# thrift api process list
 pid_list = []
 
 prev_list_normal=[]
 current_list_normal=[]
 
+#iteration number is used to handle base case of first window.
 iteration_number=0
+
 
 f= open('attack.txt','w')
 
+# this file stores chi-square value corresponding to each window
 file_chisq= open('chi-sq-results.txt','w')
 
+#probab.txt contains distribution which we obtained using expected behavior run.
 file_expected= open('probab.txt','r')
 
+#we store the image of chi-square plot using matplotlib in images folder.
 file_attack=open('./images/file_attack_predicted.txt',"a")
 
+#this file stores data which was above threshold for all windows.
 file_pos_weights= open('./images/positive-weights.txt',"a")
 
+#this file stores data which was below the threshold for all windows.
 file_neg_weights= open('./images/negative-weights.txt',"a")
 
+#list for storing 
 list_pos_weights=[]
 
 list_neg_weights=[]
 
 threshold_list= []
 
+
 expected_lines= file_expected.readlines()
-
 probab_dict= dict()
-
 save_image_to= './images/'
 file_count= open('./images/count.txt','r+')
 count_lines= file_count.readlines()
 
 
-
+#store the expected probabilities in probab_dict
 for line in expected_lines:
 	current_array= line.split(" ")
 	if float(current_array[1]) > 0.0:
@@ -60,7 +74,7 @@ for line in expected_lines:
 for key in probab_dict.keys():
 	print(key,probab_dict[key])
 
-
+# method to plot the observed behavior
 def plot_graph(x, y, xlabel, ylabel, title,y1):
     plt.plot(x, y, 'r',marker='o',color='green')
     plt.plot(x,y1,'r',ls='--',color='red')
@@ -75,7 +89,7 @@ def plot_graph(x, y, xlabel, ylabel, title,y1):
     file_count.write(str(next_file_number))
     plt.savefig(save_image_to + str(title_name + '.png'))
 
-
+#this method is used to predict the start and end time of attack and plot in matplotlib
 def predict_attack_duration(chi_sq_list):
 	start_flag=0
 	end_flag= 0
@@ -90,11 +104,14 @@ def predict_attack_duration(chi_sq_list):
 			end_flag=1 
 	plt.axvline(x=predicted_attack_start,color='blue',ls=':')
 	plt.axvline(x= predicted_attack_end,color='blue',ls=':')
+	## we add 15 seconds because initially there is a sleep of 10 seconds + 5 seconds
+	## time referencing
 	file_attack.write(str(predicted_attack_start*5 + 15))
 	file_attack.write(" ")
 	file_attack.write(str(predicted_attack_end*5 + 15))
 	file_attack.write("\n")
 
+## we also plot the actual duration of attack using the below function
 def ground_truth_data():
 	gt=open("../kv_store/attack-time-ground-truth.txt",'r')
 	lines= gt.readlines()
@@ -105,13 +122,8 @@ def ground_truth_data():
 	gt_end = float(required_array[1])
 	gt_start= (gt_start - 15)/5
 	gt_end= (gt_end - 15)/5
-
-	
 	plt.axvline(x= gt_start,color='orange',ls=':')
 	plt.axvline(x=gt_end,color='orange',ls=':')
-
-	
-	
 
 
 
@@ -119,17 +131,23 @@ g=0
 window_count= -1
 chi_sq_list=[]
 
+#sleep is applied for avoiding initial icmp packets and cache initialisation part
+#since we donot want to calculate chi-square for caache initialisation part.
 time.sleep(10)
 
 while True:
 	window_count= window_count + 1
+	# sleep for 5 seconds before capturing again
 	time.sleep(5)
+	# we use popen to execute thrift api commands in commands1 and commands2 and store
+	# output of BL_CODE and BL_CODE_Frequency in out1.txt and out2.txt respectively
 	p1=(Popen("simple_switch_CLI --thrift-port 9090 < commands1.txt >out1.txt",shell=True))
 	p1.wait()
 
 	p2=(Popen("simple_switch_CLI --thrift-port 9090 < commands2.txt >out2.txt",shell=True))
 	p2.wait()
 
+	# from the dump in text file build bl_code list in (my_reg1)
 	myfile1=open("out1.txt","r")
 	count1=0
 	line1 = myfile1.readlines()
@@ -143,6 +161,7 @@ while True:
 	
 	myfile1.close()
 
+	# from the dump in text file build bl_Code_frequency list in (my_reg2)
 
 	myfile2=open("out2.txt","r")
 	count2=0
@@ -157,6 +176,8 @@ while True:
 	
 	myfile2.close()
 
+
+	## using my_reg1 and my_reg2 build a pair of (bl_code,bl_code frequency) in my_reg3
 	for i in range(0,len(my_reg1)):
 		my_reg1[i]= int(my_reg1[i])
 
@@ -170,6 +191,7 @@ while True:
 
 	# print(my_reg3)
 
+	## if it is first iteration we don't require moving sum 
 	if iteration_number==0:
 		packets_seen=0
 		normal_list=[]
@@ -198,6 +220,7 @@ while True:
 		actual_bl_code={}
 		actual_list=[]
 		curr_window=[]
+		## capture the current distribution by subtracting from previous lists answer
 		for i,j in zip(my_reg3,prev_list):
 			temp_count= i[1]-j[1]
 			current_count= temp_count
@@ -208,12 +231,10 @@ while True:
 				actual_list.append(i[0])
 
 
-		
+	## if packets observed are zero then end the script
 	if packets_seen==0:
 		chi_sq_list= [math.log(x,2) for x in chi_sq_list]
 		threshold_list= [math.log(x,2) for x in threshold_list]
-
-
 		for i in list_pos_weights:
 			file_pos_weights.write(str(i))
 			file_pos_weights.write(" ")
@@ -229,6 +250,11 @@ while True:
 		break
 		#perform chi square with normal
 
+
+	## we have three lists
+	## 1. Expected intersection Actual (normal_atck_int) --> [ (o-e)^2 / e ] {e= max(min_packet_threshol,e)}
+	## 2. Expected Only (normal_only) ---> [ (0-e)^2 / e ] {0 because actually not seen}
+	## 3. Actual only  (actual_only) ----> [(o-min_packet_threshold)^2]/(min_packet_threshold)
 
 	normal_only_list= [x for x in normal_list if x not in actual_list]
 	actual_only_list= [x for x in actual_list if x not in normal_list]
@@ -286,6 +312,7 @@ while True:
 		print("################ Normal chi square ################ ")
 		print("Window: ",window_count)
 		print(chi_sq_normal,union_val,packets_seen)
+		# we take alpha = 0.01 level of significance (can change this parameter accordingly)
 		curr_threshold= scipy.stats.chi2.ppf(0.99,union_val)
 		threshold_list.append(curr_threshold)
 		if chi_sq_normal - curr_threshold > 0:

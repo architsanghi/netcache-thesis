@@ -1,3 +1,5 @@
+## this script is used to parse the log information 
+## we can use grep commands result and pass that information to verify bl path stats
 from itertools import izip
 
 file1= open('s1-out1.log','r')
