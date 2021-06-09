@@ -5,9 +5,14 @@ python netcache-aug.py
 	### The output of script is BL-weights for ingress.p4 file ###
 	### We manually augment the ingress.p4 file ######
 
+###### SAMPLE TESTING ##########
 
+1. We also provide a sample test to run ,Navigate to base directory and execute
+   bash ./runner.sh
 
+2. Observe the result in src/p4/images.
 
+####################################
 
 #### GATHERING EXPECTED BEHAVIOR #####
 
