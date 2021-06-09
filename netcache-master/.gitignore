@@ -20,7 +20,7 @@ src/kv_store/data
 # ignore json files except p4app.json
 *.json
 !src/p4/p4app*.json
-!src/p4/core/before augmentation/netcache.json
+!src/p4/core/before-augmentation/netcache.json
 
 # ignore latex related files
 report/*.aux
