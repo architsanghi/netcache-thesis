@@ -667,6 +667,8 @@ control MyIngress(inout headers hdr,
 
 		l2_forward.apply();
 
+		// bl value unique 
+
 		bit<32> modulo_value= 1023;
  		bit<32> index = meta.bl_value&modulo_value;
 
