@@ -1,0 +1,2 @@
+('Number of legitimate items are', 5)
+('Percentage of legitimate items deleted', 40.0)

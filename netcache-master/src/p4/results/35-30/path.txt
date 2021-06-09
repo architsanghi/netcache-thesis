@@ -1,0 +1,21 @@
+(' number_of_eq_classes are', 12)
+(98817, 1805)
+(135874, 5680)
+(148225, 1)
+(172930, 21299)
+(182194, 1569)
+(193001, 855) ---> decreased alot
+(195317, 1037) 
+(197631, 2)
+(198420, 402)
+(198424, 30)
+(198426, 2009) ---> increased copy to cpu path
+(198429, 63101)---> increased alot [read requests going to storage servers] [before a key becomes hot basically.]
+
+
+
+
+
+
+
+

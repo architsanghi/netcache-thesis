@@ -1,0 +1,8 @@
+120.031826019
+150.032765865
+210.035965919
+
+
+
+('Number of legitimate items are', 66)
+('Percentage of legitimate items deleted', 18.181818181818183)

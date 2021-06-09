@@ -1,0 +1,5 @@
+register_write bl_code 0
+register_write bl_code 1
+register_write bl_code 2
+register_write bl_code 3
+register_write bl_code 4

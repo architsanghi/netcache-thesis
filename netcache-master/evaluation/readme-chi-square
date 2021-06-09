@@ -1,0 +1,91 @@
+###### EXECUTING THE BALL LAURUS SCRIPT #########
+1. Navigate to src/p4/core/before augmentation
+python netcache-aug.py 
+
+	### The output of script is BL-weights for ingress.p4 file ###
+	### We manually augment the ingress.p4 file ######
+
+
+
+
+
+#### GATHERING EXPECTED BEHAVIOR #####
+
+
+0. We provide a sample captured expected behavior in src/p4/probab.txt. If you want to build your own expected behavior follow steps 1-9 below.
+
+1. Navigate to `src/kv_store` and execute the `produce_keyvals.sh` script to generate
+10000 key-value pairs for each server:
+```bash
+./produce_keyvals.sh -s 8 -n 10000
+
+
+2 Inside `src/kv_store` directory, we use `gen_zipf_samples.py` file to generate a zipf
+based query workload of 100000 queries with skewness parameter of 0.5.
+```bash
+python3 gen_zipf_samples.py --n-servers 8 --n-queries 100000 --skew 0.5
+
+3.Navigate to `src/p4` directory and execute the `p4app_gen.sh` to create a p4app json
+file that resembles our desired topology:
+```bash
+./p4app_gen.sh -s 8 -c 1
+
+4.Inside `src/p4` use the previously generated p4app file to start the topology:
+```bash
+sudo p4run --config p4app_8_1.json
+
+5. In another terminal window, navigate to `src/control_plane` and start the controller:
+```bash
+sudo python controller.py
+```
+
+6. In another terminal window, navigate to `src/p4` and initialize the servers while
+also prepopulating them with the key-value pairs generated at Step 1:
+```bash
+./init_servers.sh 8
+```
+7. navigate to src/kv_store/data
+ 	python splitter.py
+
+8. In another terminal window, navigate to `src/kv_store` and spawn a client to execute the workload that we generated at step 7
+
+mkdir -p results
+mx client1 python3 exec_queries.py --n-servers 8 --suppress --input data/train.txt
+
+9. Soon after step 8 navigate to src/p4 and execute (Note: Perform step 9 soon after step 8)
+python expected.py
+
+
+
+
+###### OBSERVED BEHAVIOR/ ATTACK DETECTION ##########
+
+1. Navigate to `src/p4` directory and execute the `p4app_gen.sh` to create a p4app json
+file that resembles our desired topology:
+```bash
+./p4app_gen.sh -s 8 -c 1
+
+2. Inside `src/p4` use the previously generated p4app file to start the topology:
+```bash
+sudo p4run --config p4app_8_1.json
+
+3.  In another terminal window, navigate to `src/control_plane` and start the controller:
+```bash
+sudo python controller.py
+
+4.  In another terminal window, navigate to `src/p4` and initialize the servers while
+also prepopulating them with the key-value pairs generated at Step 1:
+```bash
+./init_servers.sh 8
+
+5 In another terminal window, navigate to `src/kv_store/data`
+	python random-attack.py 
+
+6. In another terminal window, navigate to `src/kv_store` 
+	mkdir -p results
+	mx client1 python3 exec_queries.py --n-servers 8 --suppress --input data/traffic.txt
+
+7. Soon after step 5 navigate to src/p4 (Note: Perform step 7 soon after step 6)
+	python observed.py
+
+8. The visualise result of the run is stored src/p4/images.

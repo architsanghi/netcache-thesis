@@ -1,0 +1,51 @@
+Observed behavior
+('Number of packets taking Path', 74114, '==>', 1)
+('Number of packets taking Path', 98817, '==>', 8132)
+('Number of packets taking Path', 160577, '==>', 3498)
+('Number of packets taking Path', 172930, '==>', 26893)
+('Number of packets taking Path', 182194, '==>', 1907)
+('Number of packets taking Path', 185280, '==>', 1)
+('Number of packets taking Path', 193001, '==>', 684)
+('Number of packets taking Path', 195317, '==>', 1338)
+('Number of packets taking Path', 196860, '==>', 1)
+('Number of packets taking Path', 197631, '==>', 1)
+('Number of packets taking Path', 198420, '==>', 316)
+('Number of packets taking Path', 198423, '==>', 1324)
+('Number of packets taking Path', 198424, '==>', 26)
+('Number of packets taking Path', 198429, '==>', 33456)
+
+Observed
+('Number of packets taking Path', 98817, '==>', 3757)
+('Number of packets taking Path', 160577, '==>', 7831)
+('Number of packets taking Path', 172928, '==>', 1)
+('Number of packets taking Path', 172930, '==>', 26892)
+('Number of packets taking Path', 182194, '==>', 1749)
+('Number of packets taking Path', 193001, '==>', 1667)
+('Number of packets taking Path', 194544, '==>', 1)
+('Number of packets taking Path', 195317, '==>', 1238)
+('Number of packets taking Path', 196860, '==>', 1)
+('Number of packets taking Path', 198420, '==>', 326)
+('Number of packets taking Path', 198423, '==>', 1278)
+('Number of packets taking Path', 198424, '==>', 23)
+('Number of packets taking Path', 198429, '==>', 32130)
+
+
+
+
+
+
+Expected--> 
+('Number of packets taking Path', 98817, '==>', 11272)
+('Number of packets taking Path', 160577, '==>', 4773)
+('Number of packets taking Path', 172930, '==>', 36375)
+('Number of packets taking Path', 182194, '==>', 2649)
+('Number of packets taking Path', 193001, '==>', 2265)
+('Number of packets taking Path', 195317, '==>', 1751)
+('Number of packets taking Path', 198423, '==>', 67)
+('Number of packets taking Path', 198424, '==>', 27)
+('Number of packets taking Path', 198429, '==>', 1771)
+
+
+
+
+

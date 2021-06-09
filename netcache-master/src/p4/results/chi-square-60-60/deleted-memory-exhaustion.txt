@@ -1,0 +1,8 @@
+('Number of legitimate items are', 76)
+('Percentage of legitimate items deleted', 28.947368421052634)
+
+Memory exhausted at 
+120.065027952
+180.067318916
+210.072541952
+240.075195789

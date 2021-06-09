@@ -1,0 +1,17 @@
+chi square results--> Current window is 0 Value for chi square is 964.661059526 Total number of equivalence classes 10
+chi square results--> Current window is 1 Value for chi square is 13.8172316606 Total number of equivalence classes 9
+chi square results--> Current window is 2 Value for chi square is 16.5835578935 Total number of equivalence classes 9
+chi square results--> Current window is 3 Value for chi square is 7.31243228472 Total number of equivalence classes 9
+chi square results--> Current window is 4 Value for chi square is 4.29942696569 Total number of equivalence classes 9
+chi square results--> Current window is 5 Value for chi square is 10.7022865232 Total number of equivalence classes 9
+chi square results--> Current window is 6 Value for chi square is 15.2561122786 Total number of equivalence classes 9
+chi square results--> Current window is 7 Value for chi square is 16.46084085 Total number of equivalence classes 9
+chi square results--> Current window is 8 Value for chi square is 13.4818378042 Total number of equivalence classes 9
+chi square results--> Current window is 9 Value for chi square is 3.92840465816 Total number of equivalence classes 9
+chi square results--> Current window is 10 Value for chi square is 12.3258998017 Total number of equivalence classes 9
+chi square results--> Current window is 11 Value for chi square is 30.2653737162 Total number of equivalence classes 9
+chi square results--> Current window is 12 Value for chi square is 16.9876698978 Total number of equivalence classes 9
+chi square results--> Current window is 13 Value for chi square is 11.2519454388 Total number of equivalence classes 9
+chi square results--> Current window is 14 Value for chi square is 13.4182189189 Total number of equivalence classes 9
+chi square results--> Current window is 15 Value for chi square is 366.44392449 Total number of equivalence classes 9
+chi square results--> Current window is 16 Value for chi square is 18.7526827245 Total number of equivalence classes 9

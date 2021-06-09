@@ -1,0 +1,25 @@
+10 eq classes
+(98817, 3434) --> read  -->different table paths
+(135874, 5700)-- read   -->different table paths
+(172930, 36600)-- read	-->different table paths
+(182194, 1923) -->read	-->different table paths	
+(193001, 9012)-- read	-->different table paths
+(195317, 2361)-- read	-->different table paths	
+(196860, 8)-- read		-->different table paths
+(198424, 25) ---> read 
+(198426, 60) --> copy to cpu path
+(198429, 1872)--> read requests going to storage servers 
+
+60995 total
+
+
+
+
+
+
+when not tracking vtable paths.
+
+(1557, 59056)
+(198424, 27)
+(198426, 63)
+(198429, 1833)

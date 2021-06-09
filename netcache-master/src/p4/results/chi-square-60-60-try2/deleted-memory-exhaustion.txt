@@ -1,0 +1,3 @@
+('Number of legitimate items are', 76)
+('Percentage of legitimate items deleted', 21.847368421052634)
+
